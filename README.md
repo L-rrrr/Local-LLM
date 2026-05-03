@@ -10,6 +10,10 @@ The current implementation focuses on the end-to-end agent loop, typed data flow
 
 ## Architecture
 
+![Architecture diagram](architecture_diagram.png)
+
+The image above shows the high-level flow of the app from the user, through the desktop shell and agent loop, to Ollama, the location search service, and the map view.
+
 1. The chat panel accepts a natural-language location query.
 2. `src/App.tsx` sends the conversation into the agent loop.
 3. `src/lib/ollama.ts` talks to the local Ollama HTTP API and checks that Ollama is reachable.

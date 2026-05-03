@@ -77,10 +77,7 @@ export function parseToolArguments(argumentsValue: string | Record<string, unkno
 export async function checkOllamaHealth(): Promise<{ accessible: boolean; modelAvailable: boolean; error?: string }> {
   try {
     // Check if Ollama is accessible
-    const healthResponse = await fetch(`${OLLAMA_BASE_URL}/api/tags`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const healthResponse = await fetch(`${OLLAMA_BASE_URL}/api/tags`);
 
     if (!healthResponse.ok) {
       return {
