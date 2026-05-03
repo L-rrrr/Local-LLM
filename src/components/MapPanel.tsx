@@ -50,6 +50,11 @@ export function MapPanel({
     bearing: 0,
     pitch: 0,
   });
+  const [hoveredLocation, setHoveredLocation] = useState<{
+    x: number;
+    y: number;
+    location: LocationRecord;
+  } | null>(null);
 
   useEffect(() => {
     setViewState((current) => ({
@@ -59,6 +64,21 @@ export function MapPanel({
   }, [locations]);
 
   const selectedLocation = locations.find((location) => location.id === selectedLocationId) ?? null;
+
+  function updateHoveredLocation(locationId: string | null, x: number, y: number) {
+    if (!locationId) {
+      setHoveredLocation(null);
+      return;
+    }
+
+    const location = locations.find((candidate) => candidate.id === locationId);
+    if (!location) {
+      setHoveredLocation(null);
+      return;
+    }
+
+    setHoveredLocation({ x, y, location });
+  }
 
   const layers = useMemo(() => {
     const pointFeatures = featureCollection.features.filter(isPointFeature);
@@ -76,6 +96,9 @@ export function MapPanel({
         onClick: (info: PickingInfo<GeoJsonFeature>) => {
           onSelectLocation(info.object?.id ?? null);
         },
+        onHover: (info: PickingInfo<GeoJsonFeature>) => {
+          updateHoveredLocation(info.object?.id ?? null, info.x ?? 0, info.y ?? 0);
+        },
       }),
       new ScatterplotLayer<LocationRecord>({
         id: 'location-points',
@@ -91,6 +114,9 @@ export function MapPanel({
         getLineColor: [255, 255, 255, 220],
         onClick: (info: PickingInfo<LocationRecord>) => {
           onSelectLocation(info.object?.id ?? null);
+        },
+        onHover: (info: PickingInfo<LocationRecord>) => {
+          updateHoveredLocation(info.object?.id ?? null, info.x ?? 0, info.y ?? 0);
         },
       }),
     ];
@@ -110,6 +136,21 @@ export function MapPanel({
           attributionControl={false}
         />
       </DeckGL>
+
+      {hoveredLocation ? (
+        <div
+          className="map-panel__tooltip"
+          style={{
+            left: `${Math.min(hoveredLocation.x + 12, 320)}px`,
+            top: `${Math.max(hoveredLocation.y - 12, 12)}px`,
+          }}
+        >
+          <p className="eyebrow">Hover details</p>
+          <h3>{hoveredLocation.location.name}</h3>
+          <p>{hoveredLocation.location.displayName}</p>
+          <p>{hoveredLocation.location.category}</p>
+        </div>
+      ) : null}
 
       <div className="map-panel__overlay">
         <p className="eyebrow">Map output</p>
