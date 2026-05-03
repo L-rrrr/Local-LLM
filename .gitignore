@@ -1,0 +1,8 @@
+Nika SWE Intern Assignment 2026.pdf
+Nika_SWE_Intern_Assignment_2026.md
+plan.md
+
+node_modules/
+dist/
+src-tauri/target/
+*.log

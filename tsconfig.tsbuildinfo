@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/types.ts","./src/vite-env.d.ts","./src/components/chatpanel.tsx","./src/components/mappanel.tsx","./src/lib/agent.ts","./src/lib/geo.ts","./src/lib/locationsearch.ts","./src/lib/ollama.ts","./src/lib/tools.ts","./vite.config.ts"],"version":"5.9.3"}
