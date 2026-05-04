@@ -3,9 +3,14 @@ import type { ConversationMessage } from '../types';
 export const OLLAMA_MODEL = 'qwen2.5:7b';
 export const OLLAMA_BASE_URL = 'http://localhost:11434';
 
+export interface ParameterProperty {
+  type: 'string' | 'number' | 'boolean';
+  description: string;
+}
+
 export interface OllamaToolParameterSchema {
   type: 'object';
-  properties: Record<string, unknown>;
+  properties: Record<string, ParameterProperty>;
   required?: string[];
   additionalProperties?: boolean;
 }
