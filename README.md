@@ -82,7 +82,6 @@ If your machine has more memory, you can change the model in `src/lib/ollama.ts`
 
 - Streaming output is not implemented yet.
 - Only one tool is wired right now: `location_search`.
-- Nominatim requests are made directly from the frontend, which is simple but could be moved behind a Tauri command later.
 - Map styling is intentionally minimal so the focus stays on the agent loop and data flow.
 
 ## Useful Commands
